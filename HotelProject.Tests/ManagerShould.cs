@@ -1,5 +1,6 @@
 ﻿using HotelProject.Models;
 using HotelProject.Repository;
+using HotelProject.Repository.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,26 @@ namespace HotelProject.Tests
 
 
         [Fact]
+        public async void Not_Add_New_Manager_In_Database()
+        {
+            Manager newManager = new()
+            {
+                FirstName = "ლევანი",
+                LastName = "სვანიძე",
+                HotelId = 55,
+            };
+
+            await Assert.ThrowsAsync<HotelNotFoundException>(async () => await _managerRepository.AddManager(newManager));
+        }
+
+        [Fact]
         public async void Add_New_Manager_In_Database()
         {
             Manager newManager = new()
             {
-                FirstName = "ჯეინ",
-                LastName = "ოსტინი"
+                FirstName = "ლევანი",
+                LastName = "სვანიძე",
+                HotelId = 5,
             };
 
             await _managerRepository.AddManager(newManager);
@@ -38,21 +53,21 @@ namespace HotelProject.Tests
         [Fact]
         public async void Update_Manager_In_Database()
         {
-            Manager newManager = new()
+            Manager manager = new()
             {
-                Id = 5,
-                FirstName = "ჩარლზ",
-                LastName = "დიკენსი"
+                Id = 4,
+                FirstName = "ლუკა",
+                LastName = "ცაგარეიშვილი",
+                HotelId = 5,
             };
 
-            await _managerRepository.UpdateManager(newManager);
+            await _managerRepository.UpdateManager(manager);
         }
 
         [Fact]
-        public async void Delete_Manager_From_Database()
+        public async void Delete_Manager_In_Database()
         {
-
-            await _managerRepository.DeleteManager(7);
+            await _managerRepository.DeleteManager(4);
         }
     }
 }
