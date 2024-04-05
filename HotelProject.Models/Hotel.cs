@@ -13,8 +13,7 @@ namespace HotelProject.Models
         public double Rating { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public string PhysicalAddress { get; set; }
-        public int ManagerId { get; set; }
+        public string PhyisicalAddress { get; set; }
 
 
 
