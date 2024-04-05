@@ -1,5 +1,6 @@
 ﻿using HotelProject.Data;
 using HotelProject.Models;
+using HotelProject.Repository.Exceptions;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace HotelProject.Repository
 {
     public class ManagerRepository
     {
+        private readonly HotelRepository _hotelRepository;
+        public ManagerRepository()
+        {
+            _hotelRepository = new HotelRepository();
+        }
+
         public async Task<List<Manager>> GetManagers()
         {
             List<Manager> result = new();
@@ -23,9 +30,9 @@ namespace HotelProject.Repository
                 {
                     SqlCommand command = new(sqlExpression, connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    
+
                     await connection.OpenAsync();
-                    SqlDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
 
                     while (await reader.ReadAsync())
                     {
@@ -33,9 +40,10 @@ namespace HotelProject.Repository
                         {
                             result.Add(new Manager()
                             {
-                                Id = reader.GetInt32(0),
+                                Id = !reader.IsDBNull(0) ? reader.GetInt32(0) : 0,
                                 FirstName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty,
                                 LastName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty,
+                                HotelId = !reader.IsDBNull(3) ? reader.GetInt32(3) : 0,
                             });
                         }
                     }
@@ -52,55 +60,39 @@ namespace HotelProject.Repository
                 return result;
             }
         }
-
         public async Task AddManager(Manager manager)
         {
-            string sqlExpression = @$"sp_AddManager";
+            string sqlExpression = "sp_addManager";
 
             using (SqlConnection connection = new(ApplicationDbContext.ConnectionString))
             {
                 try
                 {
+                    var allHotels = await _hotelRepository.GetHotels();
+
+                    if (manager.HotelId <= 0)
+                    {
+                        throw new HotelNotFoundException();
+                    }
+
+                    if (!allHotels.Any(x => x.Id == manager.HotelId))
+                    {
+                        throw new HotelNotFoundException();
+                    }
+
                     SqlCommand command = new(sqlExpression, connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("firstName", manager.FirstName);
                     command.Parameters.AddWithValue("lastName", manager.LastName);
+                    command.Parameters.AddWithValue("hotelId", manager.HotelId);
 
                     await connection.OpenAsync();
-                    await command.ExecuteNonQueryAsync();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    await connection.CloseAsync();
-                }
-            }
 
-        }
-
-        public async Task UpdateManager(Manager manager)
-        {
-            string sqlExpression = @$"sp_UpdateManagers";
-
-            using (SqlConnection connection = new(ApplicationDbContext.ConnectionString))
-            {
-                try
-                {
-                    SqlCommand command = new(sqlExpression, connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("firstName", manager.FirstName);
-                    command.Parameters.AddWithValue("lastName", manager.LastName);
-                    command.Parameters.AddWithValue("id", manager.Id);
-
-                    await connection.OpenAsync();
                     int rowsAffected = await command.ExecuteNonQueryAsync();
-                    
+
                     if (rowsAffected == 0)
                     {
-                        throw new InvalidOperationException("No manager found with the specified ID.");
+                        throw new InvalidOperationException("Query didn't effect any data");
                     }
                 }
                 catch (Exception)
@@ -114,10 +106,43 @@ namespace HotelProject.Repository
             }
 
         }
+        public async Task UpdateManager(Manager manager)
+        {
+            string sqlExpression = "sp_UpdateManager";
 
+            using (SqlConnection connection = new(ApplicationDbContext.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("firstName", manager.FirstName);
+                    command.Parameters.AddWithValue("lastName", manager.LastName);
+                    command.Parameters.AddWithValue("hotelId", manager.HotelId);
+                    command.Parameters.AddWithValue("id", manager.Id);
+
+                    await connection.OpenAsync();
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                    if (rowsAffected == 0)
+                    {
+                        throw new InvalidOperationException("Query didn't effect any data");
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+            }
+
+        }
         public async Task DeleteManager(int id)
         {
-            string sqlExpression = @$"sp_DeleteManager";
+            string sqlExpression = "sp_DeleteManager";
 
             using (SqlConnection connection = new(ApplicationDbContext.ConnectionString))
             {
@@ -132,7 +157,7 @@ namespace HotelProject.Repository
 
                     if (rowsAffected == 0)
                     {
-                        throw new InvalidOperationException("No manager found with the specified ID.");
+                        throw new InvalidOperationException("Query didn't effect any data");
                     }
                 }
                 catch (Exception)
@@ -146,9 +171,5 @@ namespace HotelProject.Repository
             }
 
         }
-
-
-
-
     }
 }
