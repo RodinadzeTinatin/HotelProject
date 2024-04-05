@@ -1,0 +1,29 @@
+﻿@model Room
+@{
+    ViewData["Title"] = "Update";
+}
+
+<form asp-controller="Rooms" asp-action="UpdatePOST" method="post">
+    <input hidden asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Name">სახელი</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="IsFree">დაკავებულია/არა</label>
+        <input type="checkbox" asp-for="IsFree" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="HotelId">სასტუმრო</label>
+        <input class="form-control" asp-for="HotelId" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DailyPrice">ფასი</label>
+        <input class="form-control" asp-for="DailyPrice" />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-success" value="განახლება" />
+    </div>
+</form>
+

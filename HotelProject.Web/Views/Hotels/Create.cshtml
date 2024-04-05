@@ -1,0 +1,33 @@
+﻿@model Hotel
+@{
+    ViewData["Title"] = "ახალი სასტუმროს დამატება";
+}
+
+<h1>Create</h1>
+
+<form asp-controller="Hotels" asp-action="Create" >
+    <div class="mb-3">
+        <label asp-for="Name">დასახელება</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name">რეიტინგი</label>
+        <input class="form-control" asp-for="Rating" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name">ქვეყანა</label>
+        <input class="form-control" asp-for="Country" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name">ქალაქი</label>
+        <input class="form-control" asp-for="City" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name">ფიზ.მისამართი</label>
+        <input class="form-control" asp-for="PhyisicalAddress" />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class ="btn btn-success" value="დამატება" />
+    </div>
+</form>
+
