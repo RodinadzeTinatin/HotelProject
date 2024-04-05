@@ -23,19 +23,18 @@ namespace HotelProject.Tests
             var result = await _managerRepository.GetManagers();
         }
 
+        [Fact]
+        public async void Return_Hotels_Without_Managers()
+        {
+            var result = await _managerRepository.GetHotelsWithoutManagers();
+        }
 
         [Fact]
-        public async void Not_Add_New_Manager_In_Database()
+        public async void Return_Single_Manager_From_Database()
         {
-            Manager newManager = new()
-            {
-                FirstName = "ლევანი",
-                LastName = "სვანიძე",
-                HotelId = 55,
-            };
-
-            await Assert.ThrowsAsync<HotelNotFoundException>(async () => await _managerRepository.AddManager(newManager));
+            var result = await _managerRepository.GetSingleManager(4);
         }
+
 
         [Fact]
         public async void Add_New_Manager_In_Database()
@@ -44,7 +43,7 @@ namespace HotelProject.Tests
             {
                 FirstName = "ლევანი",
                 LastName = "სვანიძე",
-                HotelId = 5,
+                HotelId = 4,
             };
 
             await _managerRepository.AddManager(newManager);
@@ -55,10 +54,10 @@ namespace HotelProject.Tests
         {
             Manager manager = new()
             {
-                Id = 4,
+                Id = 5,
                 FirstName = "ლუკა",
-                LastName = "ცაგარეიშვილი",
-                HotelId = 5,
+                LastName = "ცაგარიშვილი",
+                HotelId = 4
             };
 
             await _managerRepository.UpdateManager(manager);

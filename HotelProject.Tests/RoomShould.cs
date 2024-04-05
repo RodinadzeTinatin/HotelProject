@@ -22,7 +22,11 @@ namespace HotelProject.Tests
         {
             var result = await _roomRepository.GetRooms();
         }
-
+        [Fact]
+        public async void Return_Single_Room_From_Database()
+        {
+            var result = await _roomRepository.GetSingleRoom(1);
+        }
         [Fact]
         public async void Add_New_Room_In_Database()
         {
@@ -44,7 +48,7 @@ namespace HotelProject.Tests
         {
             Room newRoom = new()
             {
-                Id = 5,
+                Id = 6,
                 Name = "first room",
                 IsFree = false,
                 HotelId = 2,
@@ -59,7 +63,7 @@ namespace HotelProject.Tests
         [Fact]
         public async void Delete_Room_From_Database()
         {
-            await _roomRepository.DeleteRoom(5);
+            await _roomRepository.DeleteRoom(6);
         }
     }
 }

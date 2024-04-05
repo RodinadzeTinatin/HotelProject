@@ -30,5 +30,32 @@ namespace HotelProject.Web.Controllers
             await _roomRepository.AddRoom(model);
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _roomRepository.GetSingleRoom(id);
+            return View(result);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePOST(int id)
+        {
+            await _roomRepository.DeleteRoom(id);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var result = await _roomRepository.GetSingleRoom(id);
+            return View(result);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePOST(Room model)
+        {
+            await _roomRepository.UpdateRoom(model);
+            return RedirectToAction("Index");
+        }
     }
 }

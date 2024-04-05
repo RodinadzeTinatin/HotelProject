@@ -56,7 +56,49 @@ namespace HotelProject.Repository
             }
 
         }
+        public async Task<Room> GetSingleRoom(int id)
+        {
+            Room result = new();
+            const string sqlExpression = "sp_GetSingleRoom";
 
+            using (SqlConnection connection = new(ApplicationDbContext.ConnectionString))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("id", id);
+
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        if (reader.HasRows)
+                        {
+                            result.Id = reader.GetInt32(0);
+                            result.Name = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                            result.IsFree = !reader.IsDBNull(2) && reader.GetBoolean(2);
+                            result.HotelId = reader.GetInt32(3);
+                            result.DailyPrice = !reader.IsDBNull(4) ? reader.GetDouble(4) : 0;
+
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
+                }
+
+                return result;
+            }
+
+        }
         public async Task AddRoom(Room room)
         {
             string sqlExpression = "sp_AddRoom";
