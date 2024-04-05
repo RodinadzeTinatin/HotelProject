@@ -1,0 +1,25 @@
+﻿@model Room
+@{
+    ViewData["Title"] = "Create";
+}
+<form asp-controller="Rooms" asp-action="Create">
+    <div class="mb-3">
+        <label asp-for="Name">სახელი</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="IsFree">გვარი</label>
+        <input class="form-control" asp-for="IsFree" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="HotelId">სასტუმრო</label>
+        <input class="form-control" asp-for="HotelId" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DailyPrice">ფასი</label>
+        <input class="form-control" asp-for="DailyPrice" />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-success" value="დამატება" />
+    </div>
+</form>
