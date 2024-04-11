@@ -1,5 +1,5 @@
 ﻿using HotelProject.Models;
-using HotelProject.Repository;
+using HotelProject.Repository.SQLClient;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,11 @@ namespace HotelProject.Tests
         public async void Return_All_Hotels_From_Database()
         {
             var result = await _hotelRepository.GetHotels();
+        }
+        [Fact]
+        public async void Return_Hotels_Without_Managers()
+        {
+            var result = await _hotelRepository.GetHotelsWithoutManager();
         }
 
         [Fact]

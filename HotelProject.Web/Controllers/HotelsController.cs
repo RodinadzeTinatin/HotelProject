@@ -1,29 +1,30 @@
 ﻿using HotelProject.Models;
-using HotelProject.Repository;
+using HotelProject.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelProject.Web.Controllers
 {
     public class HotelsController : Controller
     {
-        private readonly HotelRepository _hotelRepository;
-        public HotelsController(HotelRepository hotelRepository)
+        private readonly IHotelRepository _hotelRepository;
+        public HotelsController(IHotelRepository hotelRepository)
         {
             _hotelRepository = hotelRepository;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await _hotelRepository.GetHotels();
+
             return View(result);
         }
 
-        [HttpGet]
-        public IActionResult Create() 
+
+        public IActionResult Create()
         {
             return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(Hotel model)
@@ -31,6 +32,7 @@ namespace HotelProject.Web.Controllers
             await _hotelRepository.AddHotel(model);
             return RedirectToAction("Index");
         }
+
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -59,7 +61,6 @@ namespace HotelProject.Web.Controllers
             await _hotelRepository.UpdateHotel(model);
             return RedirectToAction("Index");
         }
-
     }
 
 }

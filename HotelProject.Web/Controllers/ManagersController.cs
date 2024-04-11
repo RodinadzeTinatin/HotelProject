@@ -1,41 +1,34 @@
 ﻿using HotelProject.Models;
-using HotelProject.Repository;
+using HotelProject.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HotelProject.Web.Controllers
 {
     public class ManagersController : Controller
     {
-        private readonly ManagerRepository _managerRepository;
-        
-
-
-        public ManagersController(ManagerRepository managerRepository)
+        private readonly IManagerRepository _managerRepository;
+        private readonly IHotelRepository _hotelRepository;
+        public ManagersController(IManagerRepository managerRepository, IHotelRepository hotelRepository)
         {
             _managerRepository = managerRepository;
+            _hotelRepository = hotelRepository;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await _managerRepository.GetManagers();
             return View(result);
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> HotelsWithoutManagers()
+        public async Task<IActionResult> Create()
         {
-            var hotelsWithoutManagers = await _managerRepository.GetHotelsWithoutManagers();
-            
-            return View(hotelsWithoutManagers);
-        }
+            var hotels = await _hotelRepository.GetHotelsWithoutManager();
+            ViewBag.HotelsWithoutManagers = new SelectList(hotels, "Id", "Name");
 
-        [HttpGet]
-        public IActionResult Create()
-        {
             return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(Manager model)
@@ -44,13 +37,11 @@ namespace HotelProject.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _managerRepository.GetSingleManager(id);
             return View(result);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> DeletePOST(int id)
@@ -59,9 +50,13 @@ namespace HotelProject.Web.Controllers
             return RedirectToAction("Index");
         }
 
+
         public async Task<IActionResult> Update(int id)
         {
             var result = await _managerRepository.GetSingleManager(id);
+            var hotels = await _hotelRepository.GetHotelsWithoutManager();
+            ViewBag.HotelsWithoutManagers = new SelectList(hotels, "Id", "Name");
+
             return View(result);
         }
 
@@ -72,5 +67,6 @@ namespace HotelProject.Web.Controllers
             await _managerRepository.UpdateManager(model);
             return RedirectToAction("Index");
         }
+
     }
 }

@@ -1,14 +1,14 @@
 ﻿using HotelProject.Models;
-using HotelProject.Repository;
+using HotelProject.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelProject.Web.Controllers
 {
     public class RoomsController : Controller
     {
-        private readonly RoomRepository _roomRepository;
+        private readonly IRoomRepository _roomRepository;
        
-        public RoomsController(RoomRepository roomRepository)
+        public RoomsController(IRoomRepository roomRepository)
         {
             _roomRepository = roomRepository;
         }
@@ -18,6 +18,8 @@ namespace HotelProject.Web.Controllers
             var result = await _roomRepository.GetRooms();
             return View(result);
         }
+
+
         [HttpGet]
         public IActionResult Create()
         {

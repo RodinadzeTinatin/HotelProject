@@ -3,7 +3,7 @@
     ViewData["Title"] = "ახალი მენეჯერის დამატება";
 }
 
-<form asp-controller="Managers" asp-action="Create">
+<form asp-controller="Managers" asp-action="Create" method="post">
     <div class="mb-3">
         <label asp-for="FirstName">სახელი</label>
         <input class="form-control" asp-for="FirstName" />
@@ -14,7 +14,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="HotelId">სასტუმრო</label>
-        <input class="form-control" asp-for="HotelId" />
+        <select asp-for="HotelId" asp-items="ViewBag.HotelsWithoutManagers" class="form-control"></select>
     </div>
     <div class="mb-3">
         <input type="submit" class="btn btn-success" value="დამატება" />

@@ -1,6 +1,6 @@
 ﻿using HotelProject.Models;
-using HotelProject.Repository;
 using HotelProject.Repository.Exceptions;
+using HotelProject.Repository.SQLClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +23,7 @@ namespace HotelProject.Tests
             var result = await _managerRepository.GetManagers();
         }
 
-        [Fact]
-        public async void Return_Hotels_Without_Managers()
-        {
-            var result = await _managerRepository.GetHotelsWithoutManagers();
-        }
+        
 
         [Fact]
         public async void Return_Single_Manager_From_Database()
