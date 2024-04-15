@@ -1,0 +1,33 @@
+﻿@model List<Guest>
+
+<div class="row">
+    <a class="btn btn-success w-25 btn btn-primary" asp-controller="Guests" asp-action="Create">ახალი სტუმარი</a>
+</div>
+
+<div class="row">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>სახელი</th>
+                <th>გვარი</th>
+                <th>პირადი ნომერი</th>
+                <th>ტელეფონის ნომერი</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var guest in Model)
+            {
+                <tr>
+                    <td>@guest.FirstName</td>
+                    <td>@guest.LastName</td>
+                    <td>@guest.PersonalNumber</td>
+                    <td>@guest.PhoneNumber</td>
+                    <td>
+                        <a class="btn btn-danger" asp-controller="Guests" asp-action="Delete" asp-route-id="@guest.Id">წაშლა</a>
+                        <a class="btn btn-info" asp-controller="Guests" asp-action="Update" asp-route-id="@guest.Id">განახლება</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

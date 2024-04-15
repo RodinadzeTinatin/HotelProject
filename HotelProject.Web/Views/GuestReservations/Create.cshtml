@@ -1,0 +1,16 @@
+﻿@model GuestReservation
+
+
+<form asp-controller="GuestReservations" asp-action="Create">
+    <div class="mb-3">
+        <label asp-for="GuestId">სტუმარი</label>
+        <select asp-for="GuestId" asp-items="ViewBag.GuestsForReservation" class="form-control"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ReservationId">რეზერვაცია</label>
+        <input class="form-control" asp-for="ReservationId" />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-success" value="დამატება" />
+    </div>
+</form>

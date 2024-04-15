@@ -1,0 +1,17 @@
+﻿@model GuestReservation
+
+<form asp-controller="GuestReservation" asp-action="UpdatePOST" method="post">
+    <input hidden asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="GuestId">სახელი</label>
+        <input class="form-control" asp-for="GuestId" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="ReservationId">გვარი</label>
+        <input class="form-control" asp-for="ReservationId" />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-success" value="განახლება" />
+    </div>
+</form>

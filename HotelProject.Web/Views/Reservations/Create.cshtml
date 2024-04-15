@@ -1,0 +1,16 @@
+﻿@model Reservation
+
+
+<form asp-controller="Reservations" asp-action="Create">
+    <div class="mb-3">
+        <label asp-for="CheckInDate">Check-in:</label>
+        <input class="form-control" asp-for="CheckInDate" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="CheckOutDate">Check-Out:</label>
+        <input class="form-control" asp-for="CheckOutDate" />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-success" value="დამატება" />
+    </div>
+</form>

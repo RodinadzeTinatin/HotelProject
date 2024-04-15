@@ -1,0 +1,23 @@
+﻿@model Guest
+@{
+    ViewData["Title"] = "სტუმრის წაშლა";
+}
+
+<form asp-controller="Guests" asp-action="DeletePOST" method="post">
+    <input hidden asp-for="Id" />
+    <div class="mb-3">
+        <input class="form-control" asp-for="FirstName" disabled />
+    </div>
+    <div class="mb-3">
+        <input class="form-control" asp-for="LastName" disabled />
+    </div>
+    <div class="mb-3">
+        <input class="form-control" asp-for="PersonalNumber" disabled />
+    </div>
+    <div class="mb-3">
+        <input class="form-control" asp-for="PhoneNumber" disabled />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-danger" value="წაშლა" />
+    </div>
+</form>

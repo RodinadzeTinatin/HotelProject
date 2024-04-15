@@ -18,6 +18,12 @@ namespace HotelProject.Web
             builder.Services.AddScoped<IHotelRepository, HotelRepositoryEF>();
             builder.Services.AddScoped<IManagerRepository, ManagerRepositoryEF>();
             builder.Services.AddScoped<IRoomRepository, RoomRepositoryEF>();
+            builder.Services.AddScoped<IGuestRepository, GuestRepositoryEF>();
+            builder.Services.AddScoped<IReservationRepository, ReservationRepositoryEF>();
+            builder.Services.AddScoped<IGuestReservationRepository, GuestReservationRepositoryEF>();
+
+
+
 
             builder.Services.AddControllersWithViews();
 

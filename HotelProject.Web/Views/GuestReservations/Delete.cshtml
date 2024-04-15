@@ -1,0 +1,14 @@
+﻿@model GuestReservation
+
+<form asp-controller="GuestReservations" asp-action="DeletePOST" method="post">
+    <input hidden asp-for="Id" />
+    <div class="mb-3">
+        <input class="form-control" asp-for="GuestId" disabled />
+    </div>
+    <div class="mb-3">
+        <input class="form-control" asp-for="ReservationId" disabled />
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-danger" value="წაშლა" />
+    </div>
+</form>
