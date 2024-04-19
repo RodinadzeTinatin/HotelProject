@@ -9,10 +9,11 @@ namespace HotelProject.Repository.Interfaces
 {
     public interface IGuestRepository
     {
-        public Task<List<Guest>> GetGuests();
-        public Task<Guest> GetSingleGuest(int id);
-        public Task AddGuest(Guest guest);
-        public Task UpdateGuest(Guest guest);
-        public Task DeleteGuest(int id);
+        Task<List<Guest>> GetAll();
+        Task<Guest> GetById(int id);
+        Task<Guest> GetByPin(string personalNumber);
+        Task Add(Guest guest);
+        Task Update(Guest guest);
+        Task Delete(int id);
     }
 }

@@ -12,7 +12,9 @@ namespace HotelProject.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerLocalConnection")));
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerLocalConnection")));
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
             // Add services to the container.
             builder.Services.AddScoped<IHotelRepository, HotelRepositoryEF>();
@@ -21,7 +23,7 @@ namespace HotelProject.Web
             builder.Services.AddScoped<IGuestRepository, GuestRepositoryEF>();
             builder.Services.AddScoped<IReservationRepository, ReservationRepositoryEF>();
             builder.Services.AddScoped<IGuestReservationRepository, GuestReservationRepositoryEF>();
-
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 

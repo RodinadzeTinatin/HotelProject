@@ -13,7 +13,7 @@ namespace HotelProject.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Seed Hotel
+            
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel()
                 {

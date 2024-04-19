@@ -9,10 +9,11 @@ namespace HotelProject.Repository.Interfaces
 {
     public interface IReservationRepository
     {
-        public Task<List<Reservation>> GetReservations();
-        public Task<Reservation> GetSingleReservation(int id);
-        public Task AddReservation(Reservation reservation);
-        public Task UpdateReservation(Reservation reservation);
-        public Task DeleteReservation(int id);
+        Task<List<Reservation>> GetAll();
+        Task<Reservation> GetById(int id);
+        Task<Reservation> GetByCheckInCheckOutDate(DateTime checkInDate, DateTime checkOutDate);
+        Task Add(Reservation reservation);
+        Task Update(Reservation reservation);
+        Task Delete(int id);
     }
 }

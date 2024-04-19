@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HotelProject.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -155,9 +155,9 @@ namespace HotelProject.Data.Migrations
                 columns: new[] { "Id", "CheckInDate", "CheckOutDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 4, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3867), new DateTime(2024, 4, 22, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3882) },
-                    { 2, new DateTime(2024, 4, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3889), new DateTime(2024, 5, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3890) },
-                    { 3, new DateTime(2024, 4, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(4015), new DateTime(2024, 5, 2, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(4015) }
+                    { 1, new DateTime(2024, 4, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4805), new DateTime(2024, 4, 29, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4820) },
+                    { 2, new DateTime(2024, 4, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4827), new DateTime(2024, 5, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4828) },
+                    { 3, new DateTime(2024, 4, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4853), new DateTime(2024, 5, 9, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4853) }
                 });
 
             migrationBuilder.InsertData(

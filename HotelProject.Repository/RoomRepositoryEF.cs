@@ -49,7 +49,24 @@ namespace HotelProject.Repository
 
         public async Task<List<Room>> GetRooms()
         {
-            var entities = await _context.Rooms.ToListAsync();
+            var entities = await _context.Rooms
+                .Include(nameof(Hotel))
+                .ToListAsync();
+
+            if (entities == null)
+            {
+                throw new NullReferenceException("Entities not found");
+            }
+
+            return entities;
+        }
+
+        public async Task<List<Room>> GetRoomsOfHotel(int hotelId)
+        {
+            var entities = await _context.Rooms
+                .Where(x => x.HotelId == hotelId)
+                .Include(nameof(Hotel))
+                .ToListAsync();
 
             if (entities == null)
             {
@@ -61,7 +78,9 @@ namespace HotelProject.Repository
 
         public async Task<Room> GetSingleRoom(int id)
         {
-            var entity = await _context.Rooms.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _context.Rooms
+                .Include(nameof(Hotel))
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity == null)
             {
@@ -89,7 +108,6 @@ namespace HotelProject.Repository
             entity.IsFree = room.IsFree;
             entity.DailyPrice = room.DailyPrice;
             entity.HotelId = room.HotelId;
-
 
             _context.Rooms.Update(entity);
             await _context.SaveChangesAsync();

@@ -13,13 +13,12 @@ namespace HotelProject.Repository
     public class GuestReservationRepositoryEF : IGuestReservationRepository
     {
         private readonly ApplicationDbContext _context;
-
         public GuestReservationRepositoryEF(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task AddGuestReservation(GuestReservation guestReservation)
+        public async Task Add(GuestReservation guestReservation)
         {
             if (guestReservation == null)
             {
@@ -30,14 +29,15 @@ namespace HotelProject.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteGuestReservation(int id)
+        public async Task Delete(int id)
         {
             if (id <= 0)
             {
                 throw new ArgumentNullException("Invalid argument passed");
             }
 
-            var entity = await _context.GuestReservations.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _context.GuestReservations
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity == null)
             {
@@ -48,11 +48,12 @@ namespace HotelProject.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<GuestReservation>> GetGuestReservations()
+        public async Task<List<GuestReservation>> GetAll()
         {
             var entities = await _context.GuestReservations
-                                .Include(gr => gr.Guest) 
-                                .ToListAsync();
+                .Include(nameof(Reservation))
+                .Include(nameof(Guest))
+                .ToListAsync();
 
             if (entities == null)
             {
@@ -62,18 +63,22 @@ namespace HotelProject.Repository
             return entities;
         }
 
-        public async Task<GuestReservation> GetSingleGuestReservation(int id)
+        public async Task<GuestReservation> GetById(int id)
         {
-            var entity = await _context.GuestReservations.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _context.GuestReservations
+                .Include(nameof(Reservation))
+                .Include(nameof(Guest))
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             if (entity == null)
             {
-                throw new NullReferenceException("Entities not found");
+                throw new NullReferenceException("Entity not found");
             }
 
             return entity;
         }
 
-        public async Task UpdateGuestReservation(GuestReservation guestReservation)
+        public async Task Update(GuestReservation guestReservation)
         {
             if (guestReservation == null || guestReservation.Id <= 0)
             {
@@ -87,8 +92,8 @@ namespace HotelProject.Repository
                 throw new NullReferenceException("Entity not found");
             }
 
-            entity.ReservationId = guestReservation.ReservationId;
             entity.GuestId = guestReservation.GuestId;
+            entity.ReservationId = guestReservation.ReservationId;
 
             _context.GuestReservations.Update(entity);
             await _context.SaveChangesAsync();

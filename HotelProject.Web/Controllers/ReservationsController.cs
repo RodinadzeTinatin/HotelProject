@@ -16,7 +16,7 @@ namespace HotelProject.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _reservationRepository.GetReservations();
+            var result = await _reservationRepository.GetAll();
             return View(result);
         }
 
@@ -29,12 +29,12 @@ namespace HotelProject.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Reservation model)
         {
-            await _reservationRepository.AddReservation(model);
+            await _reservationRepository.Add(model);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _reservationRepository.GetSingleReservation(id);
+            var result = await _reservationRepository.GetById(id);
             return View(result);
         }
 
@@ -42,13 +42,13 @@ namespace HotelProject.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeletePOST(int id)
         {
-            await _reservationRepository.DeleteReservation(id);
+            await _reservationRepository.Delete(id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Update(int id)
         {
-            var result = await _reservationRepository.GetSingleReservation(id);
+            var result = await _reservationRepository.GetById(id);
             return View(result);
         }
 
@@ -56,7 +56,7 @@ namespace HotelProject.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdatePOST(Reservation model)
         {
-            await _reservationRepository.UpdateReservation(model);
+            await _reservationRepository.Update(model);
             return RedirectToAction("Index");
         }
     }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240412165004_initial")]
-    partial class initial
+    [Migration("20240419123514_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -280,20 +280,20 @@ namespace HotelProject.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CheckInDate = new DateTime(2024, 4, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3867),
-                            CheckOutDate = new DateTime(2024, 4, 22, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3882)
+                            CheckInDate = new DateTime(2024, 4, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4805),
+                            CheckOutDate = new DateTime(2024, 4, 29, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4820)
                         },
                         new
                         {
                             Id = 2,
-                            CheckInDate = new DateTime(2024, 4, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3889),
-                            CheckOutDate = new DateTime(2024, 5, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(3890)
+                            CheckInDate = new DateTime(2024, 4, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4827),
+                            CheckOutDate = new DateTime(2024, 5, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4828)
                         },
                         new
                         {
                             Id = 3,
-                            CheckInDate = new DateTime(2024, 4, 12, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(4015),
-                            CheckOutDate = new DateTime(2024, 5, 2, 20, 50, 3, 822, DateTimeKind.Local).AddTicks(4015)
+                            CheckInDate = new DateTime(2024, 4, 19, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4853),
+                            CheckOutDate = new DateTime(2024, 5, 9, 16, 35, 12, 527, DateTimeKind.Local).AddTicks(4853)
                         });
                 });
 

@@ -13,12 +13,12 @@ namespace HotelProject.Repository
     public class GuestRepositoryEF : IGuestRepository
     {
         private readonly ApplicationDbContext _context;
-
         public GuestRepositoryEF(ApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task AddGuest(Guest guest)
+
+        public async Task Add(Guest guest)
         {
             if (guest == null)
             {
@@ -29,7 +29,7 @@ namespace HotelProject.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteGuest(int id)
+        public async Task Delete(int id)
         {
             if (id <= 0)
             {
@@ -47,7 +47,7 @@ namespace HotelProject.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Guest>> GetGuests()
+        public async Task<List<Guest>> GetAll()
         {
             var entities = await _context.Guests.ToListAsync();
 
@@ -59,7 +59,7 @@ namespace HotelProject.Repository
             return entities;
         }
 
-        public async Task<Guest> GetSingleGuest(int id)
+        public async Task<Guest> GetById(int id)
         {
             var entity = await _context.Guests.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -71,7 +71,19 @@ namespace HotelProject.Repository
             return entity;
         }
 
-        public async Task UpdateGuest(Guest guest)
+        public async Task<Guest> GetByPin(string personalNumber)
+        {
+            var entity = await _context.Guests.FirstOrDefaultAsync(x => x.PersonalNumber.ToLower().Trim() == personalNumber.ToLower().Trim());
+
+            if (entity == null)
+            {
+                throw new NullReferenceException("Entity not found");
+            }
+
+            return entity;
+        }
+
+        public async Task Update(Guest guest)
         {
             if (guest == null || guest.Id <= 0)
             {
@@ -87,8 +99,8 @@ namespace HotelProject.Repository
 
             entity.FirstName = guest.FirstName;
             entity.LastName = guest.LastName;
-            entity.PhoneNumber = guest.PhoneNumber;
             entity.PersonalNumber = guest.PersonalNumber;
+            entity.PhoneNumber = guest.PhoneNumber;
 
             _context.Guests.Update(entity);
             await _context.SaveChangesAsync();
